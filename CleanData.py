@@ -1,7 +1,9 @@
 import re
 import unidecode
+from nltk import word_tokenize
 
-MAX_CHAR = 50
+MAX_CHAR = 65
+MIN_LINES = 2
 
 
 def cleanData(data):
@@ -12,10 +14,23 @@ def cleanData(data):
 
     # Dividimos el texto en parrafos
 
-    attributes = list()
+    clean_data = list()
+    section_tokenized = list()
+    line = None
     sections = data.splitlines()
     for section in sections:
-        if len(section) <= MAX_CHAR and re.match('[^\W_]',section):
-            attributes.append(unidecode.unidecode(section.decode("utf-8")))
+        section = unidecode.unidecode(section.decode("utf-8"))
+        if len(section) <= MAX_CHAR and re.search('[^\W_]', section):
+            if not line:
+                line = section
+            else:
+                line = '{} {}'.format(line,section)
+            section_tokenized.extend(word_tokenize(section))
+            if len(section_tokenized) <= MIN_LINES:
+                continue
+            else:
+                clean_data.append(line)
+                line = None
+                section_tokenized = list()
 
-    return attributes
+    return  clean_data

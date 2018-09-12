@@ -10,28 +10,32 @@ Compra segura! 15 años en el Mercado, Nº 1 en MERCADOLIBRE
 
 Tienda establecida en Santiago Centro ( Metro Bustamante) y en Maipu ( Metro plaza Maipu)
 
-____________________________________________________________________________________
+_________________________________________________________________________________
 
+>>>>>Cargador Bateria Portátil Usb 10400 mAh<<<<<
 
-Basta de espacios pequeños. Las personas desean para su comodidad un espacio grande que les permita seleccionar fácilmente el atuendo de cada día.
+*La batería externa de 10.400 mAh Power Bank puede ser usada para cargar teléfonos celulares, tablets, o reproductores multimedia.
 
-El closet ropero es ideal para ti y tu hogar, es un closet con gran espacio, práctico y de fácil instalación que te brindará la mejor comodidad para organizar toda tu ropa como desees sin mayor complicidad.
+*Es cómodo, con diseño moderno y fácil de usar.
 
-Este armario de armazón liviano proporcionara 2 colgantes y 8 espacio de almacenamiento para la ropa de temporada u otros accesorios diarios.
+*Conveniente para recargar su teléfono u otros dispositivos móviles, en cualquier momento y cualquier lugar.
 
-Gran capacidad para guardar tus atuendos
-Permite la circulación de aire
-Facilita la organización de tu ropa
-La cubierta de tela mantiene todo libre de polvo y hace que su habitación ordenada.
-Puedes usar completamente cerrado o despliegue la persiana para ocultar su ropa.
-Viene con un cierre para mantenerlo completamente cerrado y unas cintas con velcro para mantenerlo abierto
+*Cuenta con botos de encendido y luces Led indicador de carga
 
-Tamaño: 165 x 125 x 43
-Detalles del empaque: 60 x 9 x 34,5
-Peso del empaque: 3.5 kg
+*Capacidad: 3.6V/10.400 mAh
+*Entrada: Micro USB 5V/2A
+*Salida: USB: 5V/2.1A
+*Incluye cable Usb
 
-___________________________________________________________________________________
+*Largo: 123
+*Dimensiones: 9.2 cm x 7.7 cm x 2.2 cm
+*Peso: 198 gr
 
+*Empaque: 19 cm x 9.2 cm x 3 cm
+*Peso: 232 gr
+
+*Color sujetos a disponibilidad de la tienda
+_____________________________________________________________________________________
 MEDIOS DE PAGO:
 
 - Transferencia, efectivo y MercadoPago.
@@ -44,8 +48,5 @@ ENVÍOS:
 
 GARANTIA:
 
-- Todos nuestros productos tienen 3 meses de garantía Legal, por fallas técnicas
-
-
-----------=====Fernapet=====-----------"""
+- Todos nuestros productos tienen 3 meses de garantía Legal, por fallas técnicas"""
     return data
