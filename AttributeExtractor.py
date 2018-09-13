@@ -44,12 +44,10 @@ def get_defined_values(data, defined_values):
     :param defined_values:
     :return: lista con los valores encontrados
     """
-    valores = list()
+    #valores = list()
     for defined_value in defined_values:
         if search('\\b{}\\b'.format(defined_value['type']), data, IGNORECASE):
-            valores.append(defined_value)
-
-    return valores
+            return defined_value
 
 
 def get_specific_value(data, attr = ''):
