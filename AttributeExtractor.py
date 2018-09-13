@@ -26,7 +26,7 @@ def get_alto_ancho_largo(data, tipo_medida = 'largo', tipo_medicion = 'cm'):
     else:
         valor = search("\d+[.,]?\d*", data).group()
     if valor:
-        unidad_medida = search("m[a-z]*[sto]$", data, IGNORECASE)
+        unidad_medida = search("m[a-z]{0,4}[sto]\\b", data, IGNORECASE)
         if unidad_medida:
             if tipo_medicion == 'cm':
                 valor = float(valor) * 100
@@ -46,25 +46,21 @@ def get_defined_values(data, defined_values):
     """
     valores = list()
     for defined_value in defined_values:
-        valores.append(findall(defined_value, data))
+        if search('\\b{}\\b'.format(defined_value['type']), data, IGNORECASE):
+            valores.append(defined_value)
 
     return valores
 
 
-def get_specific_value(data, text_type_to_search, attr = ''):
+def get_specific_value(data, attr = ''):
     """
     Dado un tipo de texto a buscar
     :param data_tokenized:
     :param text_type_to_search:
     :return:
     """
-    value = None
-    if text_type_to_search == 'nombre':
-        value = search('[A-Z][.A-Za-z]* ([A-Z][.a-z]*) ([A-Z][.a-z]*)', data).group()
-    elif text_type_to_search == 'default':
-        value = search('(?<={}).*'.format(attr), data, IGNORECASE).group()
-        value = sub('[;:=]', '', value)
-
+    value = search('(?<={}).*'.format(attr), data, IGNORECASE).group()
+    value = sub('[;:=]', '', value)
     return value
 
 
@@ -75,21 +71,11 @@ def get_volumen_litros(data):
     """
     valor_volumen = search('\d+[.,]?\d*', data).group()
     if valor_volumen:
-        medida_volumen = search('l[a-z]{0,4}[ost]?', data, IGNORECASE).group()
+        medida_volumen = search('l[a-z]{0,4}[ost]?', data, IGNORECASE)
         if not medida_volumen:
             valor_volumen = float(valor_volumen) / 1000
 
     return valor_volumen
-
-
-def get_integer_num_value(data):
-    """
-
-    :param data_tokenized:
-    :return: entrega el token que contenga solo valor numerico
-    """
-    integer_num_value = search('\d*\d', data).group()
-    return integer_num_value
 
 
 def get_num_value(data):
@@ -98,7 +84,7 @@ def get_num_value(data):
     :param data_tokenized:
     :return: entrega el token que contenga solo valor numerico
     """
-    num_value = search('\d[\d,.]*\d$', data).group()
+    num_value = search('\\b\d*[.,]*\d+', data).group()
     return num_value
 
 
@@ -120,12 +106,47 @@ def get_masa(data, tipo_medida = 'gr'):
     return valor_masa
 
 
-def extractAtribute(data, attribute, values = list()):
+def extract_atribute(data, attribute):
     """
     En base al atributo se extrae la información segun el tipo de valor que se espera
     :param data_tokenized:
     :param attribute:
     :return:
     """
-
-print get_alto_ancho_largo('Dimensiones: 9.2 metros x 7.7 metros x 2.2 metros','alto')
+    """
+    type_attribute = attribute['observation']
+    attribute_value = None
+    if type_attribute == 'dimension':
+        tipo_medida = search('largo|ancho|alto',attribute['value'],IGNORECASE)
+        if tipo_medida:
+            tipo_medida = tipo_medida.group().lower()
+            attribute_value = get_alto_ancho_largo(data, tipo_medida)
+        else:
+            attribute_value = get_alto_ancho_largo(data)
+    elif type_attribute == 'masa':
+        attribute_value = get_masa(data)
+    elif type_attribute == 'opciones':
+        attribute_value = get_defined_values(data,attribute['types'])
+    elif type_attribute == 'numero':
+        attribute_value = get_num_value(data)
+    elif type_attribute == 'generico':
+        attribute_value = get_specific_value(data, attribute['value'])
+    elif type_attribute == 'capacidad':
+        attribute_value = get_volumen_litros(data)
+    return attribute_value
+    """
+    attribute_name = attribute['value']
+    attribute_options = attribute['types']
+    if len(attribute_options):
+        attribute_value = get_defined_values(data, attribute_options)
+    elif attribute_name == 'Alto (cm)':
+        attribute_value = get_alto_ancho_largo(data, 'alto')
+    elif attribute_name == 'Ancho (cm)':
+        attribute_value = get_alto_ancho_largo(data, 'ancho')
+    elif attribute_name == 'Largo (cm)':
+        attribute_value = get_alto_ancho_largo(data, 'largo')
+    elif attribute_name == 'Peso (gr)':
+        attribute_value = get_masa(data)
+    else:
+        attribute_value = get_specific_value(data, attribute_name)
+    return attribute_value
