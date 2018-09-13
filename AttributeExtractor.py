@@ -137,14 +137,14 @@ def extract_atribute(data, attribute):
     attribute_options = attribute['types']
     if len(attribute_options):
         attribute_value = get_defined_values(data, attribute_options)
-    elif attribute_name == 'Alto (cm)':
-        attribute_value = get_alto_ancho_largo(data, 'alto')
-    elif attribute_name == 'Ancho (cm)':
-        attribute_value = get_alto_ancho_largo(data, 'ancho')
-    elif attribute_name == 'Largo (cm)':
-        attribute_value = get_alto_ancho_largo(data, 'largo')
-    elif attribute_name == 'Peso (gr)':
-        attribute_value = get_masa(data)
     else:
-        attribute_value = get_specific_value(data, attribute_name)
+        attribute_type = search('\\b(alto|largo|ancho)\\b', attribute_name, IGNORECASE)
+        if attribute_type:
+            attribute_value = get_alto_ancho_largo(data, attribute_type.group().lower())
+        else:
+            attribute_type = search('\\bpeso\\b', attribute_name, IGNORECASE)
+            if attribute_type:
+                attribute_value = get_masa(data)
+            else:
+                attribute_value = get_specific_value(data, attribute_name)
     return attribute_value
