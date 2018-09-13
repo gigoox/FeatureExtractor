@@ -47,7 +47,7 @@ def get_defined_values(data, defined_values):
     #valores = list()
     for defined_value in defined_values:
         if search('\\b{}\\b'.format(defined_value['type']), data, IGNORECASE):
-            return defined_value
+            return defined_value['type']
 
 
 def get_specific_value(data, attr = ''):
