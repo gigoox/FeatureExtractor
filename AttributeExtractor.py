@@ -26,7 +26,7 @@ def get_alto_ancho_largo(data, tipo_medida = 'largo', tipo_medicion = 'cm'):
     else:
         valor = search("\d+[.,]?\d*", data).group()
     if valor:
-        unidad_medida = search("m[a-z]{0,4}[sto]\\b", data, IGNORECASE)
+        unidad_medida = search("\d?m[a-z]{0,4}[sto]?\b", data, IGNORECASE)
         if unidad_medida:
             if tipo_medicion == 'cm':
                 valor = float(valor) * 100

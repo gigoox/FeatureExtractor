@@ -1,6 +1,7 @@
 import re
 import unidecode
 from nltk import word_tokenize
+from re import sub
 
 MAX_CHAR = 65
 MIN_LINES = 2
@@ -17,6 +18,8 @@ def cleanData(data):
     clean_data = list()
     section_tokenized = list()
     line = None
+    data = sub("<br/>|<br>|<p>|</p>", "\\n", data)
+    data = sub("<>-_\*", "", data)
     sections = data.splitlines()
     for section in sections:
         section = unidecode.unidecode(section.decode("utf-8"))
